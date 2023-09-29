@@ -10,7 +10,7 @@ interface TokenInterface{
 contract TokenShop {
     AggregatorV3Interface internal priceFeed;
     TokenInterface public minter;
-    uint256 public tokenPrice = 2000; // 1 token = 20.00 usd, with 2 decimals
+    uint256 public tokenPrice = 200; // 1 token = 2.00 usd, with 2 decimals
     address public owner;
 
     constructor(address tokenAddress){
@@ -35,7 +35,7 @@ contract TokenShop {
     function tokenAmount(uint256 amountETH) public view returns(uint256){
         uint256 ethUsd = uint256(getLatestPrice());
         uint256 amountUSD = amountETH * ethUsd / 10**18; // ETH = 18 decimal places
-        uint256 amountToken = amountUSD / tokenPrice / 100; // 2 decimal places
+        uint256 amountToken = amountUSD / tokenPrice / 10000; // To keep decimal places
         return amountToken;
     }
 
@@ -53,3 +53,4 @@ contract TokenShop {
         payable(owner).transfer(address(this).balance);
     }
 }
+
